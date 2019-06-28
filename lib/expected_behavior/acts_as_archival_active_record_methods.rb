@@ -36,5 +36,23 @@ module ExpectedBehavior
 
     end
 
+    module ARRelationMethods
+
+      def archive_all!
+        error_message = "The #{klass} must implement 'act_on_archivals' in order to call `archive_all!`"
+        raise NotImplementedError.new(error_message) unless archival?
+
+        each(&:archive!).tap { reset }
+      end
+
+      def unarchive_all!
+        error_message = "The #{klass} must implement 'act_on_archivals' in order to call `unarchive_all!`"
+        raise NotImplementedError.new(error_message) unless archival?
+
+        each(&:unarchive!).tap { reset }
+      end
+
+    end
+
   end
 end
